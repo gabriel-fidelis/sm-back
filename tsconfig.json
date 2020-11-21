@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "outDir": "./src",
+        "esModuleInterop":true
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
