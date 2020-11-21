@@ -7,9 +7,5 @@ exports.Subject = new main_1.SqlizeConnection().sqlize.define("Subject", {
     name: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false
-    },
-    result: {
-        type: sequelize_1.DataTypes.DECIMAL,
-        allowNull: true
     }
 }, { timestamps: false });

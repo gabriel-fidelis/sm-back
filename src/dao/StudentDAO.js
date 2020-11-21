@@ -68,6 +68,23 @@ var StudentDAO = /** @class */ (function () {
             });
         });
     };
+    StudentDAO.prototype.getStudentById = function (studentId) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, student_1.Student.findByPk(studentId).then(function (found) {
+                            if (found === null) {
+                                throw new Error("Estudante não encontrado.");
+                            }
+                            return JSON.stringify(found);
+                        }, function (err) {
+                            throw new Error(err);
+                        })];
+                    case 1: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
     StudentDAO.prototype.insertStudent = function (object) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {

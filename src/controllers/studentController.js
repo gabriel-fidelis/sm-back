@@ -58,6 +58,23 @@ var StudentController = /** @class */ (function () {
             });
         });
     };
+    StudentController.getStudentById = function (studentId) {
+        return __awaiter(this, void 0, void 0, function () {
+            var findResult;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this._studentDAO.getStudentById(studentId).then(function (result) {
+                            findResult = JSON.parse(result);
+                        }, function (err) {
+                            throw new Error(err);
+                        })];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, findResult];
+                }
+            });
+        });
+    };
     StudentController.createStudent = function (object) {
         return __awaiter(this, void 0, void 0, function () {
             var insertResult;

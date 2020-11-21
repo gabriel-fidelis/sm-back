@@ -15,6 +15,16 @@ export class StudentController {
         return studentsResult;
     }
 
+    static async getStudentById(studentId) { 
+        let findResult;
+        await this._studentDAO.getStudentById(studentId).then(result => { 
+            findResult = JSON.parse(result);
+        }, err => { 
+            throw new Error(err);
+        });
+        return findResult;
+    }
+
     static async createStudent(object) { 
         let insertResult;
         await this._studentDAO.insertStudent(object).then(createdStudent => { 
