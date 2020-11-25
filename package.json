@@ -2,14 +2,14 @@
   "name": "School Managment System",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/server/server.js",
+  "main": "dist/server/server.js",
   "engines": {
     "node": "12.19.0"
   },
   "scripts": {
-    "start": "node src/server/server.js",
+    "start": "node dist/server/server.js",
     "postinstall": "tsc",
-    "watch-node": "nodemon src/server/server.js",
+    "watch-node": "nodemon dist/server/server.js",
     "watch.ts": "tsc -w"
   },
   "keywords": [],
