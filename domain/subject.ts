@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { SqlizeConnection } from "../main";
+import { Assignment } from "./assignment";
 
 
 
@@ -9,3 +10,4 @@ export const Subject = new SqlizeConnection().sqlize.define("Subject", {
         allowNull:false
     }
 }, {timestamps:false})
+Subject.hasMany(Assignment);

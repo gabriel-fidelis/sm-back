@@ -4,7 +4,7 @@ import { SubjectDAO } from "../dao/subjectDAO";
 
 export class SubjectController { 
 
-    static subjectDAO:SubjectDAO = new SubjectDAO();
+    private static subjectDAO:SubjectDAO = new SubjectDAO();
 
 
 

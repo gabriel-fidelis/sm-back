@@ -3,7 +3,7 @@ import { StudentDAO } from "../dao/studentDAO";
 
 export class StudentController { 
 
-    static _studentDAO:StudentDAO = new StudentDAO();
+    private static _studentDAO:StudentDAO = new StudentDAO();
 
      static async getStudents() { 
         let studentsResult;

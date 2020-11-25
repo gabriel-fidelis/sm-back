@@ -1,4 +1,6 @@
 import { Enrollment } from "../domain/enrollment";
+import { Student } from "../domain/student";
+import { Subject } from "../domain/subject";
 import { SqlizeConnection } from "../main";
 
 export class enrollmentDAO { 
@@ -10,6 +12,15 @@ export class enrollmentDAO {
 
     async synchronize() { 
         Enrollment.sync({alter: true});
+    }
+
+    async getEnrollments():Promise<string> { 
+        this.synchronize();
+        return await Enrollment.findAll().then(found => { 
+            return JSON.stringify(found);
+        }, err => { 
+            throw new Error(err);
+        });
     }
 
     async enrollStudent(object):Promise<string> { 

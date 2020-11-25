@@ -1,3 +1,4 @@
+import { Assignment } from "../domain/assignment";
 import { Subject } from "../domain/subject";
 import { SqlizeConnection } from "../main";
 
@@ -13,7 +14,8 @@ export class SubjectDAO {
     }
 
     async getSubjectById(subjectId):Promise<string> { 
-        return await Subject.findByPk(subjectId).then(found => { 
+        this.synchronize();
+        return await Subject.findByPk(subjectId, {include:Assignment}).then(found => { 
             if (found === null) { 
                 throw new Error("Matéria não encontrada.");
             }
