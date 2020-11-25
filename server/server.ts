@@ -3,6 +3,6 @@ import { App } from "./app";
 
 
 export const app:App = new App();
-app.expressApp.listen();
+app.expressApp.listen(process.env.PORT || 5000);
 
 getRoutes(app.expressApp);
