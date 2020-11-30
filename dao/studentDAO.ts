@@ -1,3 +1,4 @@
+import { Model } from "sequelize";
 import { Student } from "../domain/student";
 import { Subject } from "../domain/subject";
 import { SqlizeConnection } from "../main";
@@ -19,23 +20,12 @@ export class StudentDAO {
         return JSON.stringify(users);
     }
 
-    async getStudentById(studentId):Promise<string> { 
-        return await Student.findByPk(studentId).then(found => { 
-            if (found === null) { 
-                throw new Error("Estudante não encontrado.");
-            }
-            return JSON.stringify(found);
-        }, err => { 
-            throw new Error(err);
-        });
+    async getStudentById(studentId):Promise<Model> { 
+        return await Student.findByPk(studentId);
     }
 
-    async insertStudent(object):Promise<string> { 
-        return await Student.create(object).then(created => {
-            return JSON.stringify(created);
-        }, err => { 
-            throw new Error(err);
-        });
+    async insertStudent(object):Promise<Model> { 
+        return await Student.create(object);
     }
 
     async deleteStudent(studentId):Promise<number> { 
