@@ -9,21 +9,24 @@ export class SubjectController {
 
 
     static async getSubjectById(subjectId) { 
-        let subjectResult;
-        await this.subjectDAO.getSubjectById(subjectId).then(result => subjectResult = JSON.parse(result), err => {
+        return await this.subjectDAO.getSubjectById(subjectId).then(result => {
+            if (result === null) { 
+                throw new Error("Matéria não encontrada.");
+            }
+        
+            return JSON.parse(JSON.stringify(result))
+            
+        }, err => {
             throw new Error(err)
         });
-        return subjectResult;
     }
 
     static async addSubject(object) { 
-        let subjectResult;
-        await this.subjectDAO.insertSubject(object).then(result => { 
-            subjectResult = result;
+        return await this.subjectDAO.insertSubject(object).then(result => { 
+            return JSON.parse(JSON.stringify(object))
         }, err => { 
             throw new Error(err);
         });
-        return subjectResult;
     }
 
     static async deleteSubject(subjectId) {
