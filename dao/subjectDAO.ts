@@ -1,3 +1,4 @@
+import { where } from "sequelize/types";
 import { Assignment } from "../domain/assignment";
 import { Subject } from "../domain/subject";
 import { SqlizeConnection } from "../main";
@@ -14,7 +15,6 @@ export class SubjectDAO {
     }
 
     async getSubjectById(subjectId):Promise<string> { 
-        this.synchronize();
         return await Subject.findByPk(subjectId, {include:Assignment}).then(found => { 
             if (found === null) { 
                 throw new Error("Matéria não encontrada.");
@@ -26,11 +26,16 @@ export class SubjectDAO {
     }
 
     async insertSubject(object):Promise<string> { 
-        this.synchronize();
         return await Subject.create(object).then(createdSubject => { 
             return JSON.stringify(createdSubject);
         }, err => { 
             throw new Error(err);
         });
+    }
+
+    async deleteSubject(subjectId):Promise<number> { 
+        return await Subject.destroy({where: { 
+            id:subjectId
+        }});
     }
 }

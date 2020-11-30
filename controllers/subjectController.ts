@@ -25,4 +25,8 @@ export class SubjectController {
         });
         return subjectResult;
     }
+
+    static async deleteSubject(subjectId) {
+        return this.subjectDAO.deleteSubject(subjectId);
+    }
 }

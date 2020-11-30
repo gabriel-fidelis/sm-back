@@ -15,7 +15,8 @@ export class SqlizeConnection {
                     require:true,
                     rejectUnauthorized:false
                 }
-            }
+            },
+            logging:false
         });
         this.sqlize.sync({alter:true});
     }

@@ -15,7 +15,6 @@ export class enrollmentDAO {
     }
 
     async getEnrollments():Promise<string> { 
-        this.synchronize();
         return await Enrollment.findAll().then(found => { 
             return JSON.stringify(found);
         }, err => { 
@@ -24,7 +23,6 @@ export class enrollmentDAO {
     }
 
     async enrollStudent(object):Promise<string> { 
-        this.synchronize();
         return await Enrollment.create(object).then(created => { 
             return JSON.stringify(created);
         }, err => { 

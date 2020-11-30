@@ -31,11 +31,16 @@ export class StudentDAO {
     }
 
     async insertStudent(object):Promise<string> { 
-        this.synchronize();
         return await Student.create(object).then(created => {
             return JSON.stringify(created);
         }, err => { 
             throw new Error(err);
         });
+    }
+
+    async deleteStudent(studentId):Promise<number> { 
+        return await Student.destroy({where: { 
+            id:studentId
+        }});
     }
 }

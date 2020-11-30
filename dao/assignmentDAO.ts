@@ -13,7 +13,6 @@ export class AssignmentDAO {
     }
 
     async getAssignmentsFromSubject(subjectId) { 
-        this.synchronize();
         return await Assignment.findAll({where: { 
             SubjectId:subjectId
         }}).then(found => { 
@@ -28,7 +27,6 @@ export class AssignmentDAO {
     }
 
     async insertAssignment(object) { 
-        this.synchronize();
         return await Assignment.create(object).then(createdAssignment => { 
             return JSON.stringify(createdAssignment);
         }, err => { 

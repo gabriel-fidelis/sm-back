@@ -82,4 +82,12 @@ export function getRoutes(app:Application) {
             res.status(500).send("Internal Server Error " + err);
         })
     })
+
+    app.delete('/students/delete/:id', (req, res) => { 
+        StudentController.deleteStudent(req.params.id).then(success => { 
+            res.send("O estudante com o Id: " + req.params.id + " foi deletado");
+        }, err => { 
+            res.status(500).send("Internal Server Error: " + err);
+        })
+    })
 }

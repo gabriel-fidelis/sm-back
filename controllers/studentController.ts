@@ -34,4 +34,8 @@ export class StudentController {
         });
         return insertResult;
     }
+
+    static async deleteStudent(studentId):Promise<number> { 
+        return this._studentDAO.deleteStudent(studentId);
+    }
 }
