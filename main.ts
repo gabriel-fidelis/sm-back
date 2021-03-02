@@ -1,8 +1,4 @@
 import { Sequelize } from "sequelize";
-import { Enrollment } from "./domain/enrollment";
-import { Student } from "./domain/student";
-import { Subject } from "./domain/subject";
-
 
 export class SqlizeConnection { 
 

@@ -1,3 +1,4 @@
+import { hash } from "bcrypt";
 import { StudentDAO } from "../dao/studentDAO";
 
 
@@ -24,7 +25,17 @@ export class StudentController {
         })
     }
 
+    static async generatePassword(password:string) { 
+        if (password.length < 8 || password.length > 18) { 
+            throw new Error("Password must be between 8 and 18 characters.");
+        }
+        return hash(password, 12);
+    }
+    
     static async createStudent(object) { 
+        const hashPassword = await this.generatePassword(object.password)
+        object.password = hashPassword;
+
         return this._studentDAO.insertStudent(object).then(created => { 
             return JSON.parse(JSON.stringify(created));
         }, err => { 

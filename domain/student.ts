@@ -3,6 +3,14 @@ import { SqlizeConnection } from "../main";
 
 
 export const Student = new SqlizeConnection().sqlize.define("Student", {
+    username: { 
+        type:DataTypes.STRING,
+        allowNull:false
+    },
+    password: { 
+        type:DataTypes.STRING,
+        allowNull:false
+    },
     name: { 
         type:DataTypes.STRING,
         allowNull:false

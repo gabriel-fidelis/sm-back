@@ -1,6 +1,5 @@
 import { Model } from "sequelize";
 import { Student } from "../domain/student";
-import { Subject } from "../domain/subject";
 import { SqlizeConnection } from "../main";
 
 export class StudentDAO { 

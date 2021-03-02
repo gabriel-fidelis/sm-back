@@ -2,7 +2,7 @@ import { Assignment } from "../domain/assignment";
 import { SqlizeConnection } from "../main";
 
 export class AssignmentDAO { 
-    private connection:SqlizeConnection;
+    private connection:SqlizeConnection; 
     
     constructor() { 
         this.connection = new SqlizeConnection();
