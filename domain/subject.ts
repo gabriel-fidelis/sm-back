@@ -3,7 +3,6 @@ import { SqlizeConnection } from "../main";
 import { Assignment } from "./assignment";
 
 
-
 export const Subject = new SqlizeConnection().sqlize.define("Subject", { 
     name: { 
         type:DataTypes.STRING,

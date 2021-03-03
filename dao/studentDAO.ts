@@ -23,6 +23,11 @@ export class StudentDAO {
         return await Student.findByPk(studentId);
     }
 
+    async getStudentByUsername(userName):Promise<Model> { 
+        return await Student.findOne({where: {username:userName}})
+    }
+
+
     async insertStudent(object):Promise<Model> { 
         return await Student.create(object);
     }

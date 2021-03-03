@@ -5,15 +5,11 @@ export class SqlizeConnection {
     public sqlize:Sequelize;
 
     constructor() { 
-        this.sqlize = new Sequelize(process.env.DATABASE_URL, {
-            dialectOptions:{
-                ssl: { 
-                    require:true,
-                    rejectUnauthorized:false
-                }
-            },
+        this.sqlize = new Sequelize('school', 'root', '', {
+            host:"localhost",
+            dialect:"mysql",
             logging:false
-        });
+        })
         this.sqlize.sync({alter:true});
     }
     

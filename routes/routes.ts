@@ -1,8 +1,12 @@
 import { Application } from "express";
+import passport from "passport";
+import { Strategy } from "passport-local";
+import { Authentication } from "../authentication-strategies";
 import { AssignmentController } from "../controllers/assignmentController";
 import { enrollmentController } from "../controllers/enrollmentController";
 import { StudentController } from "../controllers/studentController";
 import { SubjectController } from "../controllers/subjectController";
+import { Student } from "../domain/student";
 
 export function getRoutes(app:Application) { 
     app.get("/", (req, res) => {
@@ -82,6 +86,10 @@ export function getRoutes(app:Application) {
             res.status(500).send("Internal Server Error " + err);
         })
     })
+
+    app.post("/usuario/login", passport.authorize('local', {session:false}), (req, res) => { 
+        res.status(204).send();
+    });
 
     app.delete('/students/delete/:id', (req, res) => { 
         StudentController.deleteStudent(req.params.id).then(success => { 
