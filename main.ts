@@ -1,10 +1,11 @@
 import { Sequelize } from "sequelize";
-
+import * as dotenv from 'dotenv';
 export class SqlizeConnection { 
 
     public sqlize:Sequelize;
 
     constructor() { 
+        dotenv.config();
         this.sqlize = new Sequelize('school', 'root', '', {
             host:"localhost",
             dialect:"mysql",

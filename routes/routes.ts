@@ -63,7 +63,7 @@ export function getRoutes(app:Application) {
         })
     })
 
-    app.post('/students/enroll', (req, res) => { 
+    app.post('/students/enroll', passport.authenticate('bearer', {session: false}), (req, res) => { 
         enrollmentController.enrollStudent(req.body).then(success => { 
             res.json(success);
         }, err => { 
@@ -71,7 +71,7 @@ export function getRoutes(app:Application) {
         })
     })
 
-    app.post('/subjects/insert', (req, res) => { 
+    app.post('/subjects/insert', passport.authenticate('bearer', {session:false}), (req, res) => { 
         SubjectController.addSubject(req.body).then(success => {
             res.json(success);
         }, err => { 
@@ -87,7 +87,9 @@ export function getRoutes(app:Application) {
         })
     })
 
-    app.post("/usuario/login", passport.authorize('local', {session:false}), (req, res) => { 
+    app.post("/students/login", passport.authorize('local', {session:false}), (req:any, res) => { 
+        const token = Authentication.createToken(req.account);
+        res.set('Authorization', token);
         res.status(204).send();
     });
 
