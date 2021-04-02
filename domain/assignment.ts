@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { SqlizeConnection } from "../main";
+import { Subject } from "./subject";
 
 export const Assignment = new SqlizeConnection().sqlize.define('Assignment', { 
     name: { 

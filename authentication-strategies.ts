@@ -1,6 +1,8 @@
 import { compare, hash } from "bcrypt";
+import { JsonWebTokenError, sign, verify } from "jsonwebtoken";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import {Strategy as BearerStrategy}  from "passport-http-bearer";
 import { StudentDAO } from "./dao/studentDAO";
 
 export class Authentication {
@@ -16,33 +18,55 @@ export class Authentication {
           session: false,
         },
         async (username, password, done) => {
-          let foundUser;
-          this._studentDAO.getStudentByUsername(username).then(
-            async (found) => {
-              try {
-                if (!found) {
-                  throw new Error("Usuário não encontrado.");
-                }
-                foundUser = JSON.parse(JSON.stringify(found));
-
-                const value = await this.checkPassword(password, foundUser);
-
-                if (!value) { 
-                    throw new Error("Senha Inválida.");
-                }
-
-                done(null, foundUser);
-              } catch (err) {
-                done(err);
-              }
-            },
-            (err) => done(err)
-          );
+          try { 
+            const foundUser = await this._studentDAO.getStudentByUsername(username);
+            if (!foundUser) { 
+              throw new Error("Usuário não encontrado.");
+            }
+            const userObject = JSON.parse(JSON.stringify(foundUser)); //this takes off the metadatas from the object, leaving only the useful data (I'm not crazy I swear)
+            const value = await this.checkPassword(password, userObject);
+            if (!value) { 
+              throw new Error("Senha Inválida.");
+            }
+            done(null, userObject);
+           }
+          catch (err) { 
+            done(err);
+          }
         }
       )
-    );
+      );
+
+    passport.use(
+      "bearer",
+      new BearerStrategy( async (token, done) => { 
+        try { 
+          console.log(token);
+          const payload:any = verify(token, process.env.TOKEN_PASSWORD);
+          const user = await (await this._studentDAO.getStudentById(payload.id));
+          const userObject = JSON.parse(JSON.stringify(user));
+          done(null, userObject);
+        }
+        catch (err) { 
+          done(err);
+        }
+      })
+    )
   }
 
+
+
+  //Token
+  static createToken(user) {
+    const payload = { 
+      id: user.id
+    } 
+
+    const token = sign(payload, process.env.TOKEN_PASSWORD);
+    return token;
+  }
+
+  //Password
   async checkPassword(password, user) {
     return compare(password, user.password);
   }
