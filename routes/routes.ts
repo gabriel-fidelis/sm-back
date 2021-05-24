@@ -63,7 +63,9 @@ export function getRoutes(app:Application) {
         })
     })
 
-    app.post('/students/enroll', passport.authenticate('bearer', {session: false}), (req, res) => { 
+
+    //Bearer
+    app.post('/students/enroll', (req, res) => { 
         enrollmentController.enrollStudent(req.body).then(success => { 
             res.json(success);
         }, err => { 
@@ -71,7 +73,8 @@ export function getRoutes(app:Application) {
         })
     })
 
-    app.post('/subjects/insert', passport.authenticate('bearer', {session:false}), (req, res) => { 
+    //Bearer
+    app.post('/subjects/insert', (req, res) => { 
         SubjectController.addSubject(req.body).then(success => {
             res.json(success);
         }, err => { 
@@ -87,11 +90,13 @@ export function getRoutes(app:Application) {
         })
     })
 
-    app.post("/students/login", passport.authorize('local', {session:false}), (req:any, res) => { 
-        const token = Authentication.createToken(req.account);
+
+    //Login middlewares are defined in authentication-middlewares.ts, they are called everytime this route is called
+    app.post("/students/login", (req, res) => { 
+        const token = Authentication.createToken(req.user);
         res.set('Authorization', token);
-        res.status(204).send();
-    });
+        res.status(200).json(req.user);
+        });
 
     app.delete('/students/delete/:id', (req, res) => { 
         StudentController.deleteStudent(req.params.id).then(success => { 

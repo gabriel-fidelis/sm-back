@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import * as bodyParser from "body-parser"
 import passport from "passport";
 import { Authentication } from "../authentication-strategies";
+import { setAuthMiddlewares } from "../middlewares/authentication-middlewares";
 
 export class App {
     expressApp:Application;
@@ -13,5 +14,7 @@ export class App {
         this.expressApp.use(passport.initialize());
         this.expressApp.use(passport.session());
         new Authentication().generateStrategy();
+        //setting middlewares
+        setAuthMiddlewares(this.expressApp);
     }   
 }

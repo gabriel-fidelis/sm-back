@@ -9,6 +9,7 @@ export class Authentication {
   _studentDAO: StudentDAO = new StudentDAO();
 
   generateStrategy() {
+    //Login strategy
     passport.use(
       "local",
       new Strategy(
@@ -23,7 +24,7 @@ export class Authentication {
             if (!foundUser) { 
               throw new Error("Usuário não encontrado.");
             }
-            const userObject = JSON.parse(JSON.stringify(foundUser)); //this takes off the metadatas from the object, leaving only the useful data (I'm not crazy I swear)
+            const userObject = JSON.parse(JSON.stringify(foundUser)); //this takes off the metadatas from the object, leaving only the useful data
             const value = await this.checkPassword(password, userObject);
             if (!value) { 
               throw new Error("Senha Inválida.");
@@ -37,11 +38,11 @@ export class Authentication {
       )
       );
 
+    //Token verification strategy
     passport.use(
       "bearer",
       new BearerStrategy( async (token, done) => { 
         try { 
-          console.log(token);
           const payload:any = verify(token, process.env.TOKEN_PASSWORD);
           const user = await (await this._studentDAO.getStudentById(payload.id));
           const userObject = JSON.parse(JSON.stringify(user));
@@ -62,7 +63,7 @@ export class Authentication {
       id: user.id
     } 
 
-    const token = sign(payload, process.env.TOKEN_PASSWORD);
+    const token = sign(payload, process.env.TOKEN_PASSWORD, {expiresIn:"24h"});
     return token;
   }
 
